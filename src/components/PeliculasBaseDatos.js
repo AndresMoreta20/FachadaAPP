@@ -1,4 +1,4 @@
-import { collection, getDocs, addDoc, setDoc, doc} from "firebase/firestore";
+import { collection, getDocs, addDoc} from "firebase/firestore";
 import {db} from '../config/config'
 
 
@@ -9,11 +9,11 @@ export const guardarPelicula = async (pelicula) => {
   const res = await addDoc(collection(db, "MisPeliculas"), {
     titulo: pelicula.titulo,
     anio: pelicula.anio,
-    duracion: pelicula.duracion,
+   /* duracion: pelicula.duracion,
     poster: pelicula.poster,
     genero: pelicula.genero,
     director: pelicula.director,
-    pais: pelicula.pais
+    pais: pelicula.pais*/
   });
   console.log(res);
 }
@@ -25,5 +25,7 @@ export const obtenerPeliculas = async () => {
     querySnapshot.docs.forEach(doc => {
             peliculas.push(doc.data());
     });
+    console.log(coleccion);
     return peliculas;
+    
 }

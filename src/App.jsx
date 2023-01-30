@@ -1,8 +1,8 @@
-import logo from './logo.svg';
+
 import './App.css';
 import { useState } from 'react';
 
-import { FachadaPeliculas, Prueba1, ListaPeliculas, anadirPelicula, mostrarPelicula } from './components/FachadaPeliculas';
+import { ListaPeliculas } from './components/FachadaPeliculas';
 
 
 function App() {
@@ -11,17 +11,17 @@ function App() {
 
   const [peliTitulo, setPeliTitulo] = useState("");
   const [peliAnio, setPeliAnio] = useState("");
-  const [peliA, setPeliA] = useState();
-  const [tituloS, setTituloS] = useState("");
-  const [listaPelis, setPlistaPelis] = useState( [{titulo:'prueba', anio:2000},
-{titulo:'prueba2', anio:2000}]);
+  //const [peliA, setPeliA] = useState();
+  //const [tituloS, setTituloS] = useState("");
+ // const [listaPelis, setPlistaPelis] = useState( [{titulo:'prueba', anio:2000},
+//{titulo:'prueba2', anio:2000}]);
   //
   
 
   let lista = [{titulo:'prueba', anio:2000}];
 
 
-  let peli;
+  //let peli;
 
   return (
     <div className="App">
@@ -50,7 +50,7 @@ function App() {
           }>ENVIAR</button>
         </form>
 
-      <ListaPeliculas detalles={lista}/>
+        <ListaPeliculas detalles={lista}/>
       </div>
     </div>
   );

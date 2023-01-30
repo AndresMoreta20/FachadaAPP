@@ -1,10 +1,9 @@
-import { eventWrapper } from "@testing-library/user-event/dist/utils";
 
 export const cargarPeliculas = async (nombre) => {
     //const urlDeAPI = 'http://www.omdbapi.com/?t=Bladerunner&apikey=2ac64ca8'
     let peliculas = "";
     const urlA = 'http://www.omdbapi.com/?t='
-   // var nombre = 'Bladerunner'
+    // var nombre = 'Bladerunner'
     const urlC = '&apikey=2ac64ca8'
     const nuevoURL = urlA + nombre + urlC
     fetch(nuevoURL)
@@ -18,9 +17,8 @@ export const cargarPeliculas = async (nombre) => {
             return res.json()
         }
         )
-
         .then(data => { return data })
-        .catch(error => console.log('ERROR'));
+        .catch(error => console.log(error));
     /* const respuesta = await fetch(urlA)
         .then(response => response.json())
         .then(json => { peliculas = json })
