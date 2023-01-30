@@ -9,11 +9,7 @@ export const guardarPelicula = async (pelicula) => {
   const res = await addDoc(collection(db, "MisPeliculas"), {
     titulo: pelicula.titulo,
     anio: pelicula.anio,
-   /* duracion: pelicula.duracion,
-    poster: pelicula.poster,
-    genero: pelicula.genero,
-    director: pelicula.director,
-    pais: pelicula.pais*/
+
   });
   console.log(res);
 }
