@@ -31,35 +31,14 @@ export function ListaPeliculas(dato) {
    
     const list = dato.detalles.map((peli)=>{
     <li>{peli}</li>
+    return 0;
    })
 
    return(
     <ul>{list}</ul>
    );
-   /*
-    return (
-        <div>
-            <h1>Mis Peliculas</h1>
-            <table id="tablaPeliculas">
-                <thead>
-                    <tr>
-                        <th>Titulo</th>
-                        <th>Año</th>
-                       
-                    </tr>
-                </thead>
-                <tbody>
-                    {detalles.map((peli, index) => (
-                        <tr key={index}>
-                            <th>{peli.titulo}</th>
-                            <th>{peli.anio}</th>
-                          
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    )*/
+  
+
 }
 
 export function FachadaPeliculas() {
