@@ -7,8 +7,8 @@ export const guardarPelicula = async (pelicula) => {
   await setDoc(doc(db,'MisPeliculas',pelicula.titulo), pelicula)
   */
   const res = await addDoc(collection(db, "MisPeliculas"), {
-    titulo: pelicula.titulo,
-    anio: pelicula.anio,
+    titulo: pelicula.Title,
+    anio: pelicula.Year
 
   });
   console.log(res);
@@ -22,6 +22,7 @@ export const obtenerPeliculas = async () => {
             peliculas.push(doc.data());
     });
     console.log(coleccion);
+    console.log(peliculas);
     return peliculas;
     
 }

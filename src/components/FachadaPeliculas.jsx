@@ -2,8 +2,12 @@
 import React from 'react'
 
 import { obtenerPeliculas, guardarPelicula } from './PeliculasBaseDatos'
+import { cargarPeliculas } from './PeliculaAPI'
 
-
+export const buscarPelicula = async (titulo) =>{
+    let datajson = await cargarPeliculas(titulo);
+    return datajson;
+}
 
 export const anadirPelicula = async (pelicula) => {
     const res = await guardarPelicula(pelicula);
@@ -40,16 +44,3 @@ export function ListaPeliculas(dato) {
   
 
 }
-
-export function FachadaPeliculas() {
-    return (
-        <div>FachadaPeliculas</div>
-    )
-}
-
-export function Prueba1() {
-    return (
-        <div>prueba1</div>
-    )
-}
-

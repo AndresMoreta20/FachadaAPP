@@ -1,12 +1,13 @@
 
 export const cargarPeliculas = async (nombre) => {
     //const urlDeAPI = 'http://www.omdbapi.com/?t=Bladerunner&apikey=2ac64ca8'
-    let peliculas = "";
+    let datajson;
     const urlA = 'http://www.omdbapi.com/?t='
     // var nombre = 'Bladerunner'
-    const urlC = ''
+    const urlC = '&apikey='+process.env.REACT_APP_API_KEY
     const nuevoURL = urlA + nombre + urlC
-    fetch(nuevoURL)
+    console.log(nuevoURL);
+    await fetch(nuevoURL)
         .then(res => {
             if (res.ok) {
                 console.log('correct')
@@ -17,7 +18,9 @@ export const cargarPeliculas = async (nombre) => {
             return res.json()
         }
         )
-        .then(data => { return data })
+        .then(data => {datajson = data })
         .catch(error => console.log(error));
+        console.log(datajson);
+        return datajson;
 
 }

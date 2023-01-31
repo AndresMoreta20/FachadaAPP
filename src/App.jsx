@@ -1,32 +1,38 @@
 
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { ListaPeliculas } from './components/FachadaPeliculas';
-
+import { buscarPelicula, anadirPelicula, listaPeliculas } from './components/FachadaPeliculas';
 
 function App() {
 
 
 
   const [peliTitulo, setPeliTitulo] = useState("");
-  const [peliAnio, setPeliAnio] = useState("");
-  //const [peliA, setPeliA] = useState();
-  //const [tituloS, setTituloS] = useState("");
- // const [listaPelis, setPlistaPelis] = useState( [{titulo:'prueba', anio:2000},
-//{titulo:'prueba2', anio:2000}]);
-  //
-  
+//  const [peliAnio, setPeliAnio] = useState("");
+  const [listaPelis, setListaPelis] = useState([{titulo:'prueba', anio:2000}])
 
-  let lista = [{titulo:'prueba', anio:2000}];
+const enviar = async (e)=>{
+  e.preventDefault();
+  const varjson = await buscarPelicula(peliTitulo);
 
+  anadirPelicula(varjson);
+}
 
-  //let peli;
+const cargarLista = async () =>{
+  let lista = await listaPeliculas();
+  setListaPelis(lista);
+}
+
+useEffect(() => {
+  cargarLista();
+}, []);
 
   return (
     <div className="App">
       <div>
         <h1>Mi lista de Peliculas</h1>
+        <p>Andres Moreta Proyecto.</p>
       </div>
       <div>
         <form>
@@ -35,22 +41,21 @@ function App() {
             <input value={peliTitulo} type="text" onChange={e => { setPeliTitulo(e.target.value) }}></input><br /><br />
           </label>
 
-          <label>
-            Ingresa el año<br />
-            <input value={peliAnio} type="number" onChange={e => { setPeliAnio(e.target.value) }}></input><br /><br />
-          </label>
-
+        
           <button onClick={(e) => {
             e.preventDefault();
-            const pelis = {titulo:peliTitulo, anio:peliAnio}
-            //anadirPelicula(pelis);
-            lista.push(pelis);
-            console.log(lista);
+           // const pelis = {titulo:peliTitulo, anio:peliAnio}
+            enviar(e);
+
           }
           }>ENVIAR</button>
         </form>
 
-        <ListaPeliculas detalles={lista}/>
+          {listaPelis.map((peli, index)=>(
+            <div key={index}>
+              <h2>Titulo: {peli.titulo}</h2>
+            </div>
+          ))}
       </div>
     </div>
   );
