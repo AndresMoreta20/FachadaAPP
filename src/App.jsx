@@ -13,6 +13,9 @@ function App() {
   const [listaPelis, setListaPelis] = useState([{ titulo: 'prueba', anio: 2000 }])
   const [selectionModel, setSelectionModel] = useState();
 
+  const [sinopsis, setSinopsis] = useState("");
+  const [poster, setPoster] = useState("");
+
   const pelisGrid = [{ field: 'titulo', headerName: 'Título', width: '100' },
   { field: 'director', headerName: 'Director', width: '150' },
   { field: 'anio', headerName: 'anio', width: '150' },
@@ -20,11 +23,17 @@ function App() {
   ]
 
   const enviar = async (e) => {
-    e.preventDefault();
+    //  e.preventDefault();
     const varjson = await buscarPelicula(peliTitulo);
     anadirPelicula(varjson);
     // window.location.reload(false);
-   // window.location.reload();
+    // window.location.reload();
+  }
+
+  const buscar = async () => {
+    const varjson = await buscarPelicula(peliTitulo);
+    setPoster(varjson.Poster);
+    setSinopsis(varjson.Plot);
   }
 
   const cargarLista = async () => {
@@ -32,7 +41,7 @@ function App() {
     setListaPelis(lista);
   }
 
-  const quitarPelicula = async (e) =>{
+  const quitarPelicula = async (e) => {
     e.preventDefault();
     const res = await borrarPelicula(selectionModel);
     console.log(res);
@@ -58,33 +67,48 @@ function App() {
               <input value={peliTitulo} type="text" onChange={e => { setPeliTitulo(e.target.value) }}></input><br /><br />
             </label>
           </div>
-          <button style={{ padding: '1em', backgroundColor: '#009fb7', borderStyle:'none' }}
-            onClick={(e) => {
-              e.preventDefault();
-              enviar(e);
-              
-            }
-            }>Agregar</button>
+
         </form><br />
-        <div style={{ paddingTop: '2rem' }}>
 
-          <div>
-
-            <button style={{ padding: '1em', backgroundColor: '#009fb7', borderStyle:'none' }} onClick={() => { window.location.reload(false); }}> Recargar</button>
-          </div>
-
+        <button style={{ padding: '1em', backgroundColor: '#009fb7', borderStyle: 'none' }}
+          onClick={() => {
+            // e.preventDefault();
+            buscar();
+          }
+          }>Buscar</button>
+        <div>
+          <h3>{peliTitulo}</h3>
+          <p>{sinopsis}</p>
+          <img src={poster} alt="Poster de pelicula" height={300}></img>
         </div>
-        <button type='button'
-          style={{
-            background: '#FF5061',
-            borderRadius: '',
-            marginRight:'300em',
-            marginTop: '5em',
-            padding:'1em'
-          }}
-          onClick={(e) => { selectionModel != null ? quitarPelicula(e): console.log("error") }}>
-          Eliminar
-        </button>
+        <button style={{ padding: '1em', backgroundColor: '#009fb7', borderStyle: 'none' }}
+          onClick={() => {
+            // e.preventDefault();
+            enviar();
+          }
+          }>Agregar</button>
+
+
+
+        <div style={{display:"flex"}}>
+          <button style={{ padding: '1em', backgroundColor: '#00c04b', borderStyle: 'none', marginTop: '5em',marginRight: '' }} onClick={() => { window.location.reload(false); }}> Recargar</button>
+          <button type='button'
+            style={{
+              background: '#FF5061',
+              borderRadius: '',
+              marginRight: '',
+              borderStyle:'none',
+              marginTop: '5em',
+              padding: '1em'
+            }}
+            onClick={(e) => { selectionModel != null ? quitarPelicula(e) : console.log("error") }}>
+            Eliminar
+          </button>
+        </div>
+
+
+
+
         <DataGrid
           rows={listaPelis}
           columns={pelisGrid}
@@ -95,8 +119,8 @@ function App() {
           }}
           getRowId={(row) => row.titulo}
           sx={{
-            backgroundColor:'#272727',
-            color:'white',
+            backgroundColor: '#272727',
+            color: 'white',
             boxShadow: 2,
             border: 2,
             borderColor: 'none',
