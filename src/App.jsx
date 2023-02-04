@@ -4,6 +4,14 @@ import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { buscarPelicula, anadirPelicula, listaPeliculas, borrarPelicula } from './components/FachadaPeliculas';
 
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 
 function App() {
 
@@ -23,11 +31,9 @@ function App() {
   ]
 
   const enviar = async (e) => {
-    //  e.preventDefault();
     const varjson = await buscarPelicula(peliTitulo);
     anadirPelicula(varjson);
-    // window.location.reload(false);
-    // window.location.reload();
+
   }
 
   const buscar = async () => {
@@ -50,6 +56,31 @@ function App() {
   useEffect(() => {
     cargarLista();
   }, []);
+
+
+  ///Control del mensaje popUp
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+   ///Control del mensaje popUp
+   const [openEliminar, setOpenEliminar] = React.useState(false);
+
+   const handleClickOpenEliminar = () => {
+     setOpenEliminar(true);
+   };
+ 
+   const handleCloseEliminar = () => {
+     setOpenEliminar(false);
+   };
+
+  
 
 
 
@@ -85,23 +116,26 @@ function App() {
           onClick={() => {
             // e.preventDefault();
             enviar();
+            handleClickOpen();
           }
           }>Agregar</button>
 
 
 
-        <div style={{display:"flex"}}>
-          <button style={{ padding: '1em', backgroundColor: '#00c04b', borderStyle: 'none', marginTop: '5em',marginRight: '' }} onClick={() => { window.location.reload(false); }}> Recargar</button>
+        <div style={{ display: "flex" }}>
+          <button style={{ padding: '1em', backgroundColor: '#00c04b', borderStyle: 'none', marginTop: '5em', marginRight: '' }} onClick={() => { window.location.reload(false); }}> Recargar</button>
           <button type='button'
             style={{
               background: '#FF5061',
               borderRadius: '',
               marginRight: '',
-              borderStyle:'none',
+              borderStyle: 'none',
               marginTop: '5em',
               padding: '1em'
             }}
-            onClick={(e) => { selectionModel != null ? quitarPelicula(e) : console.log("error") }}>
+            onClick={(e) => { selectionModel != null ? quitarPelicula(e) : console.log("error");
+            handleClickOpenEliminar();
+            }}>
             Eliminar
           </button>
         </div>
@@ -129,6 +163,51 @@ function App() {
             },
           }}
         />
+
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Alerta"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Pelicula agregada correctamente
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={()=>{handleClose();
+            window.location.reload();}} autoFocus>
+              Aceptar
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+
+        <Dialog
+          open={openEliminar}
+          onClose={handleCloseEliminar}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Alerta"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Pelicula eliminada
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={()=>{handleCloseEliminar();
+            window.location.reload();}} autoFocus>
+              Aceptar
+            </Button>
+          </DialogActions>
+        </Dialog>
 
 
       </div>
