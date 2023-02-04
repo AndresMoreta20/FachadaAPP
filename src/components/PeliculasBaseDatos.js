@@ -1,4 +1,4 @@
-import { collection, getDocs, addDoc} from "firebase/firestore";
+import { collection, getDocs, addDoc, deleteDoc, doc} from "firebase/firestore";
 import {db} from '../config/config'
 
 
@@ -23,10 +23,22 @@ export const obtenerPeliculas = async () => {
     const coleccion = collection(db, 'users');
     var peliculas = [];
     querySnapshot.docs.forEach(doc => {
-            peliculas.push(doc.data());
+      var tmpData  = doc.data();
+      var key = doc.id;
+      peliculas.push({key,
+        ...tmpData});
+           
     });
     console.log(coleccion);
     console.log(peliculas);
     return peliculas;
-    
+  
+}
+
+export const eliminarPelicula = async (selectionModel) => {
+  if (selectionModel != null) {
+    await deleteDoc(doc(db, "MisPeliculas", selectionModel.row.key));
+  }
+  //console.log(selectionModel.row);
+  //window.location.reload();
 }

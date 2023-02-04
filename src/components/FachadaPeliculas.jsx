@@ -1,7 +1,7 @@
 
 import React from 'react'
 
-import { obtenerPeliculas, guardarPelicula } from './PeliculasBaseDatos'
+import { obtenerPeliculas, guardarPelicula, eliminarPelicula } from './PeliculasBaseDatos'
 import { cargarPeliculas } from './PeliculaAPI'
 
 export const buscarPelicula = async (titulo) =>{
@@ -11,6 +11,11 @@ export const buscarPelicula = async (titulo) =>{
 
 export const anadirPelicula = async (pelicula) => {
     const res = await guardarPelicula(pelicula);
+    console.log(res);
+}
+
+export const borrarPelicula = async (selectionModel) =>{
+    const res = await eliminarPelicula(selectionModel);
     console.log(res);
 }
 
@@ -31,16 +36,3 @@ export function mostrarPelicula (pelicula) {
     )
 }
 
-export function ListaPeliculas(dato) {
-   
-    const list = dato.detalles.map((peli)=>{
-    <li>{peli}</li>
-    return 0;
-   })
-
-   return(
-    <ul>{list}</ul>
-   );
-  
-
-}
